@@ -1,0 +1,85 @@
+:root {
+    --linear-color: linear-gradient(90deg, rgba(242, 203, 160, 1) 0%, rgba(245, 4, 90, 1) 100%);
+    --main-color: #D98E86;
+    --lighter-color: #fff;
+    --dark-color: #090A0A;
+}
+
+.redondear {
+    border-radius: 10px;
+}
+
+#buscador {
+    position: sticky;
+    top: 0;
+}
+
+body {
+    background-color: #F4F4F4;
+}
+
+.bg-main {
+    background-color: #F4F4F4;
+}
+
+.bg-container {
+    background-color: #ECECEE;
+}
+
+.bg-card {
+    background-color: #DDD7D9;
+}
+
+.form-control:focus {
+    box-shadow: 0px 0px 2px 2px rgba(9, 10, 10, 0.5) !important;
+    background-color: #ECECEE !important;
+    border: 1px solid #090A0A !important;
+    color: #090A0A !important;
+}
+
+.card-producto {
+    height: 230px;
+}
+
+.imagen {
+    width: 120px;
+    height: 140px;
+    object-fit: cover;
+}
+
+.text-precio {
+    color: var(--main-color);
+}
+
+.text-producto {
+    color: var(--dark-color);
+    line-height: 18px;
+}
+
+.h-detalle {
+    height: calc(100% - 155px);
+}
+
+.bg-rosa {
+    background: var(--main-color);
+}
+
+form img {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    border: 4px solid var(--main-color);
+}
+
+form div:first-child input {
+    display: none;
+}
+
+form div:first-child label {
+    margin-top: 0.5rem;
+    background: var(--main-color);
+    color: white;
+    padding: 6px 20px;
+    cursor: pointer;
+    border-radius: 3px;
+}
