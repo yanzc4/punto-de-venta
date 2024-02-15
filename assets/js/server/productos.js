@@ -1,19 +1,73 @@
 //funcion muestra productos
 function buscar_ahora(buscar) {
-    var parametros = {
-        buscar: buscar,
-    };
-    $.ajax({
-        data: parametros,
-        type: "POST",
-        url: "../backend/controller/productosController.php?f=showProductos",
-        success: function (data) {
-            document.getElementById('contenedorProductos').innerHTML = data;
-        },
-    });
-    return false;
+    // Obtener el término de búsqueda
+    busca = buscar.toLowerCase();
+    // Obtener la lista de nombres
+    var con = document.getElementsByClassName('lp');
+    var nombres = document.getElementsByClassName('lblproducto');
+
+    // Iterar sobre la lista de nombres y mostrar/ocultar según la coincidencia con el término de búsqueda
+    for (var i = 0; i < nombres.length; i++) {
+        var nombre = nombres[i].innerText.toLowerCase();
+        var mostrar = nombre.includes(busca);
+        con[i].style.display = mostrar ? 'block' : 'none';
+    }
 }
-buscar_ahora("");
+
+//funcion lista todos los productos
+function listarProductos() {
+    if(localStorage.getItem("productos") == null){
+        $.ajax({
+            type: "POST",
+            url: "../backend/controller/productosController.php?f=showProductsAll",
+            success: function (r) {
+                //crear localstorage con los productos
+                localStorage.setItem("productos", r);
+                mostrarProductos();
+            },
+        });
+    }else{
+        mostrarProductos();
+    }
+}
+
+
+listarProductos();
+
+//funcion para recorrer el localstorage y mostrar los productos
+function mostrarProductos() {
+    var datos = localStorage.getItem("productos");
+    producto = JSON.parse(datos);
+    console.log(producto);
+    var res = "";
+    for (var i = 0; i < producto.length; i++) {
+        res += `
+        <div class="col-6 col-lg-3 mb-2 lp">
+            <div class="container bg-card card-producto redondear p-0">
+                <div class="text-center py-2">
+                    <img class="imagen" src="../${producto[i].imagen}" alt="${producto[i].nombre}"><br>
+                </div>
+                <div class="pt-1 pe-3 ps-3 bg-main h-detalle  w-100">
+                    <div class="d-flex">
+                        <div class="col">
+                            <span class="text-precio fw-bold">S./ ${producto[i].precio}</span>
+                        </div>
+                        <div class="col-auto ms-3">
+                            <span data-bs-toggle="modal" data-bs-target="#editarProducto" onclick="llenarModal('${producto[i].id}||${producto[i].nombre}||${producto[i].precio}')"><i class="bi bi-pen-fill text-precio"></i></span>
+                        </div>
+                        <div class="col-auto ms-3">
+                            <span onclick="eliminacion('${producto[i].id}')"><i class="bi bi-trash3-fill text-precio"></i></span>
+                        </div>
+                    </div>
+                    <p class="text-producto lblproducto">${producto[i].nombre}</p>
+                </div>
+            </div>
+        </div>
+    `;
+    }
+    document.getElementById("contenedorProductos").innerHTML = res;
+}
+
 
 //funcion para llenar modal
 function llenarModal(datos) {
@@ -36,7 +90,11 @@ $(document).ready(function () {
             success: function (e) {
                 document.getElementById("cuerpo-noti").innerHTML = e;
                 $("#noti").modal("show");
-                buscar_ahora("");
+                //eliminar los datos del formulario
+                document.getElementById("frmAgregar").reset();
+                //eliminar localstorage
+                localStorage.removeItem("productos");
+                listarProductos();
             },
         });
         return false;
@@ -54,7 +112,9 @@ $(document).ready(function () {
             success: function (e) {
                 document.getElementById("cuerpo-noti").innerHTML = e;
                 $("#noti").modal("show");
-                buscar_ahora("");
+                //eliminar localstorage
+                localStorage.removeItem("productos");
+                listarProductos();
             },
         });
         return false;
@@ -81,7 +141,9 @@ function mandar_php(codigo) {
         success: function (r) {
             document.getElementById("cuerpo-noti").innerHTML = r;
             $("#noti").modal("show");
-            buscar_ahora("");
+            //eliminar localstorage
+            localStorage.removeItem("productos");
+            listarProductos();
         },
     });
 }

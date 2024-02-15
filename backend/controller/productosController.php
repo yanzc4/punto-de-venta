@@ -39,6 +39,23 @@ function showProductos()
     }
 }
 
+//funcion para listar productos
+function showProductsAll(){
+    $conexion = conectar();
+    $resultado = listaProductosTodos($conexion);
+    while ($row = mysqli_fetch_array($resultado)) {
+        //guardarlo en un array para poder enviarlo por json
+        $datos[] = array(
+            'id' => $row['id'],
+            'nombre' => $row['nombre'],
+            'precio' => $row['precio'],
+            'imagen' => $row['imagen']
+        );
+        
+    }
+    echo json_encode($datos);
+}
+
 //funcion para agregar productos
 function addProductos()
 {

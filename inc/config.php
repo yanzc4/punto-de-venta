@@ -1,6 +1,6 @@
 <?php
 //Datos de configuracion de la base de datos
-$servidor = "locallhost";
+$servidor = "localhost";
 $usuario = "root";
 $pass = "";
 $bbdd = 'tiendita';

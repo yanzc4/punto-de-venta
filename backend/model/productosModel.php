@@ -25,4 +25,10 @@ function eliminarProductos($conexion, $id){
     return $resultado;
 }
 
+function listaProductosTodos($conexion){
+    $query = "select * from productos where estado=1 order by id desc";
+    $resultado = $conexion->query($query);
+    return $resultado;
+}
+
 ?>

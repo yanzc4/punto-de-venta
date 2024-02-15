@@ -15,7 +15,7 @@
         <h3>Productos</h3>
         <div class="d-flex mt-2 mb-2">
             <div class="col">
-                <input onkeyup="buscar_ahora($('#buscar_1').val());" type="text" class="form-control bg-container" id="buscar_1" name="buscar_1" placeholder="Buscar Producto">
+            <input oninput="buscar_ahora($('#buscar_1').val());" type="text" class="form-control" id="buscar_1" name="buscar_1" placeholder="Buscar Producto">
             </div>
             <div class="col-auto ms-1">
                 <button class="btn btn-transparent pe-0 ps-2">
